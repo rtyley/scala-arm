@@ -26,7 +26,7 @@ object ArmDef extends Build {
     autoCompilerPlugins := true,
     addContinuations,
     scalacOptions += "-P:continuations:enable"
-  ) settings(publishSettings:_*) settings(websiteSettings:_*)) settings(bcSettings:_*) settings(releaseSettings:_*) settings(sonatypeSettings:_*)
+  ) settings(releaseSettings:_*) settings(sonatypeSettings:_*) settings(publishSettings:_*) settings(websiteSettings:_*)) settings(bcSettings:_*)
 
   def bcSettings: Seq[Setting[_]] = mimaDefaultSettings ++ Seq(
     previousArtifact <<= scalaVersion apply { sv =>
