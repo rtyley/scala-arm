@@ -14,7 +14,7 @@ import xerial.sbt.Sonatype._
 import SonatypeKeys._
 import com.typesafe.sbt.pgp.PgpKeys
 
-object ArmDef extends Build {
+object  ArmDef extends Build {
 
   val arm = (Project("scala-arm", file(".")) settings(
     organization := "com.jsuereth",
@@ -71,18 +71,12 @@ object ArmDef extends Build {
       commitReleaseVersion,
       tagRelease,
       ReleaseStep(
-        action = { state =>
-          val extracted = Project extract state
-          extracted.runAggregated(PgpKeys.publishSigned in Global in extracted.get(thisProjectRef), state)
-        },
+        action = { state => "publishSigned" :: state },
         enableCrossBuild = true
       ),
       setNextVersion,
       commitNextVersion,
-      ReleaseStep{ state =>
-        val extracted = Project extract state
-        extracted.runAggregated(SonatypeKeys.sonatypeReleaseAll in Global in extracted.get(thisProjectRef), state)
-      },
+      ReleaseStep{ state => "sonatypeReleaseAll" :: state },
       pushChanges
     )
   )
